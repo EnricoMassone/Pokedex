@@ -42,6 +42,8 @@ public sealed class Option<T> where T : class
   }
 
   public static readonly Option<T> None = new(default, hasValue: false);
+
+  public static implicit operator Option<T>(T value) => Option.Some(value);
 }
 
 public static class Option
