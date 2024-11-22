@@ -12,18 +12,18 @@ public sealed class Result<T> where T : class
 
     if (value is null && error == Error.None)
     {
-      throw NewInvalidResultObjectArgumentsException();
+      throw NewInvalidResultArgumentsException();
     }
 
     if (value is not null && error != Error.None)
     {
-      throw NewInvalidResultObjectArgumentsException();
+      throw NewInvalidResultArgumentsException();
     }
 
     this.Error = error;
     this._value = value;
 
-    static InvalidResultObjectArgumentsException NewInvalidResultObjectArgumentsException() =>
+    static InvalidResultArgumentsException NewInvalidResultArgumentsException() =>
       new(
         $"The provided combination of {nameof(value)} and {nameof(error)} parameters is invalid"
       );
