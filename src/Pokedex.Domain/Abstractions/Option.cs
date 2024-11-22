@@ -37,7 +37,7 @@ public sealed class Option<T> where T : class
         return _value!;
       }
 
-      throw new InvalidOperationException("Value of an empty option cannot be accessed.");
+      throw new InvalidOperationException("Value of an empty option cannot be accessed");
     }
   }
 
