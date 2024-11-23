@@ -1,44 +1,82 @@
 using Pokedex.Application;
 using Pokedex.Infrastructure;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
+using System.Globalization;
 using System.Reflection;
 
 namespace Pokedex.Api;
 
 public static class Program
 {
-  public static void Main(string[] args)
+  public static int Main(string[] args)
   {
-    var builder = WebApplication.CreateBuilder(args);
+    Log.Logger = new LoggerConfiguration()
+        .WriteTo.Console(
+          outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} <s:{SourceContext}>{NewLine}{Exception}",
+          formatProvider: CultureInfo.InvariantCulture,
+          theme: AnsiConsoleTheme.Code
+        )
+        .CreateBootstrapLogger();
 
-    // Add services to the container.
-    builder.Services.AddControllers();
+    Log.Information("Starting up!");
 
-    builder.Services.AddApplication();
-    builder.Services.AddInfrastructure(builder.Configuration);
-
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-
-    builder.Services.AddSwaggerGen(options =>
+    try
     {
-      // using System.Reflection;
-      var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-      options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-    });
+      var builder = WebApplication.CreateBuilder(args);
 
-    var app = builder.Build();
+      // Setup Serilog logging
+      builder.Services.AddSerilog((serviceProvider, loggerConfiguration) =>
+         loggerConfiguration
+          .ReadFrom.Configuration(builder.Configuration)
+          .ReadFrom.Services(serviceProvider)
+      );
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-      app.UseSwagger();
-      app.UseSwaggerUI();
+      // Add services to the container.
+      builder.Services.AddControllers();
+
+      builder.Services.AddApplication();
+      builder.Services.AddInfrastructure(builder.Configuration);
+
+      // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+      builder.Services.AddEndpointsApiExplorer();
+
+      builder.Services.AddSwaggerGen(options =>
+      {
+        // using System.Reflection;
+        var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+      });
+
+      var app = builder.Build();
+
+      app.UseSerilogRequestLogging();
+
+      // Configure the HTTP request pipeline.
+      if (app.Environment.IsDevelopment())
+      {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+      }
+
+      app.UseAuthorization();
+
+      app.MapControllers();
+
+      app.Run();
+
+      Log.Information("Stopped cleanly");
+
+      return 0;
     }
-
-    app.UseAuthorization();
-
-    app.MapControllers();
-
-    app.Run();
+    catch (Exception exception)
+    {
+      Log.Fatal(exception, "An unhandled exception occurred during bootstrapping");
+      return 1;
+    }
+    finally
+    {
+      Log.CloseAndFlush();
+    }
   }
 }
