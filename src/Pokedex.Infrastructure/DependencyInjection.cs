@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Pokedex.Domain.Pokemons;
 using Pokedex.Infrastructure.PokeApis;
 using Pokedex.Infrastructure.PokeApis.Configuration;
+using Polly;
 
 namespace Pokedex.Infrastructure;
 
@@ -28,7 +29,13 @@ public static class DependencyInjection
         .Value;
 
       httpClient.BaseAddress = pokeApiOptions.BaseAddress;
-    });
+    })
+    .AddTransientHttpErrorPolicy(policyBuilder =>
+        policyBuilder.WaitAndRetryAsync(
+            retryCount: 3,
+            sleepDurationProvider: _ => TimeSpan.FromMilliseconds(600)
+        )
+    );
 
     services.AddTransient<IPokemonRepository, PokemonHttpRepository>();
 
