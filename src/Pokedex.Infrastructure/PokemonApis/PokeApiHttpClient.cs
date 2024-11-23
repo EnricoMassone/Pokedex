@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 
 namespace Pokedex.Infrastructure.PokemonApis;
 
-public sealed class PokeApiHttpClient
+public sealed class PokeApiHttpClient : IPokeApiHttpClient
 {
   private readonly HttpClient _httpClient;
 
