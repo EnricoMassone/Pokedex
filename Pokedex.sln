@@ -27,7 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokedex.Infrastructure", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokedex.Infrastructure.UnitTests", "test\Pokedex.Infrastructure.UnitTests\Pokedex.Infrastructure.UnitTests.csproj", "{DA5E9CFF-97BA-47A2-A29A-9F9A13BC93E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokedex.Framework", "src\Pokedex.Framework\Pokedex.Framework.csproj", "{CA8BE723-9994-47B9-BEAC-94E47A9AB501}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{0840B9E8-F09D-49B5-9A49-ECB6AD1F3FB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokedex.Framework", "src\Pokedex.Framework\Pokedex.Framework.csproj", "{E1D32CA3-E418-4501-B384-A5A259A86DEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,10 +69,10 @@ Global
 		{DA5E9CFF-97BA-47A2-A29A-9F9A13BC93E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA5E9CFF-97BA-47A2-A29A-9F9A13BC93E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA5E9CFF-97BA-47A2-A29A-9F9A13BC93E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA8BE723-9994-47B9-BEAC-94E47A9AB501}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA8BE723-9994-47B9-BEAC-94E47A9AB501}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA8BE723-9994-47B9-BEAC-94E47A9AB501}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA8BE723-9994-47B9-BEAC-94E47A9AB501}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1D32CA3-E418-4501-B384-A5A259A86DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1D32CA3-E418-4501-B384-A5A259A86DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1D32CA3-E418-4501-B384-A5A259A86DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1D32CA3-E418-4501-B384-A5A259A86DEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,5 +86,6 @@ Global
 		{4AE1390A-B10E-4FC6-99AC-B284DAF73639} = {A51EBEEA-B569-4732-B1A0-F2C4CFF67932}
 		{4E62F3DE-1156-4C9F-A923-941FBA182708} = {AB688FD5-9113-44B3-AC41-29CAB1223149}
 		{DA5E9CFF-97BA-47A2-A29A-9F9A13BC93E1} = {AB688FD5-9113-44B3-AC41-29CAB1223149}
+		{E1D32CA3-E418-4501-B384-A5A259A86DEC} = {0840B9E8-F09D-49B5-9A49-ECB6AD1F3FB6}
 	EndGlobalSection
 EndGlobal
