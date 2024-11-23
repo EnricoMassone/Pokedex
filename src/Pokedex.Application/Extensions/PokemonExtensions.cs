@@ -3,7 +3,7 @@ using Pokedex.Domain.Pokemons;
 
 namespace Pokedex.Application.Extensions;
 
-public static class PokemonExtensions
+internal static class PokemonExtensions
 {
   public static GetPokemonQueryResponse ToGetPokemonQueryResponse(
     this Pokemon pokemon)
