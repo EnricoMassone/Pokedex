@@ -7,8 +7,4 @@
     <AnalysisMode>All</AnalysisMode>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Pokedex.Framework\Pokedex.Framework.csproj" />
-  </ItemGroup>
-
 </Project>
