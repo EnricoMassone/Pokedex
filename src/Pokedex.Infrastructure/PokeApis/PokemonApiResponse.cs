@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Pokedex.Infrastructure.PokemonApis;
+namespace Pokedex.Infrastructure.PokeApis;
 
 public sealed record PokemonApiResponse
 {

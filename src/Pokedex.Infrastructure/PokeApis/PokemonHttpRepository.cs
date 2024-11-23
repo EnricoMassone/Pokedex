@@ -1,7 +1,7 @@
 ﻿using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 
-namespace Pokedex.Infrastructure.PokemonApis;
+namespace Pokedex.Infrastructure.PokeApis;
 
 public sealed class PokemonHttpRepository : IPokemonRepository
 {

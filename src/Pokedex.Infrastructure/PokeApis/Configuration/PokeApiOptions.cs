@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pokedex.Infrastructure.PokemonApis.Configuration;
+namespace Pokedex.Infrastructure.PokeApis.Configuration;
 
 public sealed class PokeApiOptions
 {

@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Pokedex.Domain.Pokemons;
-using Pokedex.Infrastructure.PokemonApis;
-using Pokedex.Infrastructure.PokemonApis.Configuration;
+using Pokedex.Infrastructure.PokeApis;
+using Pokedex.Infrastructure.PokeApis.Configuration;
 
 namespace Pokedex.Infrastructure;
 

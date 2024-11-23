@@ -3,7 +3,7 @@ using Pokedex.Domain.Pokemons;
 using System.Net;
 using System.Net.Http.Json;
 
-namespace Pokedex.Infrastructure.PokemonApis;
+namespace Pokedex.Infrastructure.PokeApis;
 
 public sealed class PokeApiHttpClient : IPokeApiHttpClient
 {
