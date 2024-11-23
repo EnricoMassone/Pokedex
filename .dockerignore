@@ -1,0 +1,33 @@
+# Ignore .NET Core build and publish directories
+bin/
+obj/
+
+# Ignore user-specific files and folders
+*.swp
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore local development files
+.vscode/
+.vs/
+.idea/
+
+# Ignore macOS files
+*.DS_Store
+
+# Ignore git files
+.git
+.gitignore
+
+# Ignore build output from node.js or npm
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Ignore any secret files
+*.secret
+
+# Ignore any additional build files
+*.pdb
