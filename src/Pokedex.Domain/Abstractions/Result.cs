@@ -41,12 +41,9 @@ public sealed class Result<T> where T : class
         return _value!;
       }
 
-      throw new InvalidOperationException("Value of a failure result cannot be accessed.");
+      throw new InvalidOperationException("Value of a failure result cannot be accessed");
     }
   }
-
-  public static implicit operator Result<T>(T value) => Result.Success(value);
-  public static implicit operator Result<T>(Error error) => Result.Failure<T>(error);
 }
 
 public static class Result
