@@ -9,6 +9,7 @@ public sealed class PokeApiHttpClientTests
   public async Task GetPokemonByNameAsync_Throws_ArgumentNullException_When_Name_Is_Null(
     CancellationToken cancellationToken)
   {
-
+    var filePath = Path.Combine("TestApiResponses", "PokemonSpeciesApiResponse.json");
+    var jsonContent = File.ReadAllText(filePath);
   }
 }
