@@ -48,6 +48,19 @@ public sealed class Result<T> where T : class
 
 public static class Result
 {
-  public static Result<T> Success<T>(T value) where T : class => new(value, Error.None);
-  public static Result<T> Failure<T>(Error error) where T : class => new(default, error);
+  public static Result<T> Success<T>(T value) where T : class
+  {
+    ArgumentNullException.ThrowIfNull(value);
+
+    return new(value, Error.None);
+  }
+  public static Result<T> Failure<T>(Error error) where T : class
+  {
+    if (error == Error.None)
+    {
+      throw new ArgumentException("Value of error parameter cannot be Error.None", nameof(error));
+    }
+
+    return new(default, error);
+  }
 }
