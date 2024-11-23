@@ -11,3 +11,8 @@ COPY src/Pokedex.Framework/Pokedex.Framework.csproj ./src/Pokedex.Framework/
 
 # Restore the application 
 RUN dotnet restore ./src/Pokedex.Api/Pokedex.Api.csproj
+
+# Copy all the other files
+COPY src/. ./src/
+WORKDIR /source/src/Pokedex.Api/
+RUN dotnet publish -c release -o /app --no-restore
