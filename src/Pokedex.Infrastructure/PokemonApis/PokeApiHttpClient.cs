@@ -1,4 +1,5 @@
 ﻿using Pokedex.Domain.Abstractions;
+using Pokedex.Domain.Pokemons;
 using System.Net;
 using System.Net.Http.Json;
 
@@ -13,12 +14,9 @@ public sealed class PokeApiHttpClient : IPokeApiHttpClient
     _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
   }
 
-  public async Task<Option<PokemonApiResponse>> GetPokemonByNameAsync(string name, CancellationToken cancellationToken)
+  public async Task<Option<PokemonApiResponse>> GetPokemonByNameAsync(Name name, CancellationToken cancellationToken)
   {
-    if (string.IsNullOrWhiteSpace(name))
-    {
-      throw new ArgumentException("Pokemon name cannot be null or white space", nameof(name));
-    }
+    ArgumentNullException.ThrowIfNull(name);
 
     var requestUri = BuildGetPokemonSpeciesApiUri(name);
 
