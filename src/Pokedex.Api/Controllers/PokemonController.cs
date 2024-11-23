@@ -7,6 +7,7 @@ namespace Pokedex.Api.Controllers;
 
 [ApiController]
 [Route("pokemon")]
+[Produces("application/json")]
 public class PokemonController : ControllerBase
 {
   private readonly ISender _sender;
@@ -17,7 +18,10 @@ public class PokemonController : ControllerBase
   }
 
   [HttpGet("{name}")]
-  public async Task<ActionResult<Pokemon>> GetByName(
+  [ProducesResponseType(StatusCodes.Status200OK)]
+  [ProducesResponseType(StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(StatusCodes.Status404NotFound)]
+  public async Task<ActionResult<GetPokemonQueryResponse>> GetByName(
     [Required(ErrorMessage = "Pokemon name cannot be null or white space")] string name,
     CancellationToken cancellationToken)
   {

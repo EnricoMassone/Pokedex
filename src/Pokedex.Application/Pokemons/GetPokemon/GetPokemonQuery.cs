@@ -4,4 +4,4 @@ using Pokedex.Domain.Pokemons;
 
 namespace Pokedex.Application.Pokemons.GetPokemon;
 
-public sealed record GetPokemonQuery(Name Name) : IRequest<Option<Pokemon>>;
+public sealed record GetPokemonQuery(Name Name) : IRequest<Option<GetPokemonQueryResponse>>;
