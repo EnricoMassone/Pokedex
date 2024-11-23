@@ -43,10 +43,15 @@ public sealed class Option<T> where T : class
 
   public static readonly Option<T> None = new(default, hasValue: false);
 
-  public static implicit operator Option<T>(T value) => Option.Some(value);
+  public static implicit operator Option<T>(T? value) => value is null ? None : Option.Some(value);
 }
 
 public static class Option
 {
-  public static Option<T> Some<T>(T value) where T : class => new(value, hasValue: true);
+  public static Option<T> Some<T>(T value) where T : class
+  {
+    ArgumentNullException.ThrowIfNull(value);
+
+    return new(value, hasValue: true);
+  }
 }

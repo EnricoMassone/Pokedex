@@ -16,8 +16,8 @@ public sealed class OptionTests
 
     // ASSERT
     result.Should().NotBeNull();
-    result.Value.Should().Be(value);
     result.HasValue.Should().BeTrue();
+    result.Value.Should().Be(value);
   }
 
   [Fact]
@@ -51,8 +51,30 @@ public sealed class OptionTests
 
     // ASSERT
     result.Should().NotBeNull();
-    result.Value.Should().Be(value);
     result.HasValue.Should().BeTrue();
+    result.Value.Should().Be(value);
+  }
+
+  [Fact]
+  public void Null_Value_Can_Be_Implicitly_Converted_To_Empty_Option()
+  {
+    // ACT
+    Option<TestData> result = (TestData?)null;
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.HasValue.Should().BeFalse();
+  }
+
+  [Theory]
+  [AutoData]
+  public void Value_Of_Non_Empty_Option_Can_Be_Read(TestData value)
+  {
+    // ACT
+    var result = new Option<TestData>(value, hasValue: true);
+
+    // ASSERT
+    result.Value.Should().Be(value);
   }
 
   [Theory]
@@ -81,7 +103,7 @@ public sealed class OptionTests
   }
 
   [Fact]
-  public void Accessing_Value_Of_Empty_Option_Throws_InvalidOperationException()
+  public void Reading_Value_Of_Empty_Option_Throws_InvalidOperationException()
   {
     // ARRANGE
     var sut = new Option<TestData>(default, hasValue: false);
@@ -91,5 +113,30 @@ public sealed class OptionTests
 
     // ASSERT
     exception.Message.Should().Be("Value of an empty option cannot be accessed");
+  }
+
+  [Theory]
+  [AutoData]
+  public void Some_Factory_Method_Creates_Non_Empty_Option(TestData value)
+  {
+    // ACT
+    var result = Option.Some(value);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.HasValue.Should().BeTrue();
+    result.Value.Should().Be(value);
+  }
+
+  [Fact]
+  public void Some_Factory_Method_Throws_ArgumentNullException_When_Provided_Value_Is_Null()
+  {
+    // ACT
+    var exception = Assert.Throws<ArgumentNullException>(
+      () => Option.Some(default(TestData)!)
+    );
+
+    // ASSERT
+    exception.ParamName.Should().Be("value");
   }
 }
