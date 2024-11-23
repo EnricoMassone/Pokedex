@@ -2,6 +2,7 @@
 using Pokedex.Domain.Pokemons;
 using Pokedex.Infrastructure.PokeApis;
 using RichardSzalay.MockHttp;
+using System.Net;
 
 namespace Pokedex.Infrastructure.UnitTests.PokeApis;
 
@@ -74,6 +75,32 @@ public sealed class PokeApiHttpClientTests
     pokemon.FlavorTextEntries[1].FlavorText.Should().Be("A Bulbasaur es fácil verle echándose una siesta al sol.\nLa semilla que tiene en el lomo va creciendo cada vez más\na medida que absorbe los rayos del sol.");
     pokemon.FlavorTextEntries[1].Language.Should().NotBeNull();
     pokemon.FlavorTextEntries[1].Language.Name.Should().Be("es");
+
+    // check executed HTTP requests
+    mockHttp.VerifyNoOutstandingExpectation();
+  }
+
+  [Fact]
+  public async Task GetPokemonByNameAsync_Returns_Empty_Option_When_PokeApi_Returns_404()
+  {
+    // ARRANGE
+    using var mockHttp = new MockHttpMessageHandler();
+
+    mockHttp.Expect("https://server.example.com/api/v2/pokemon-species/bulbasaur")
+            .Respond(HttpStatusCode.NotFound);
+
+    using var httpClient = mockHttp.ToHttpClient();
+
+    httpClient.BaseAddress = new Uri("https://server.example.com/");
+
+    var sut = new PokeApiHttpClient(httpClient);
+
+    // ACT
+    var result = await sut.GetPokemonByNameAsync(new Name("bulbasaur"), CancellationToken.None);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.HasValue.Should().BeFalse();
 
     // check executed HTTP requests
     mockHttp.VerifyNoOutstandingExpectation();
