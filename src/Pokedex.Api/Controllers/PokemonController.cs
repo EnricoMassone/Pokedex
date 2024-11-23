@@ -14,7 +14,7 @@ public class PokemonController : ControllerBase
 
   public PokemonController(ISender sender)
   {
-    _sender = sender;
+    _sender = sender ?? throw new ArgumentNullException(nameof(sender));
   }
 
   /// <summary>
