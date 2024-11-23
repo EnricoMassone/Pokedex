@@ -1,6 +1,6 @@
 ﻿namespace Pokedex.Domain.Pokemons;
 
-public sealed class Pokemon
+public sealed record Pokemon
 {
   public required string Name { get; init; }
   public required string? Description { get; init; }
