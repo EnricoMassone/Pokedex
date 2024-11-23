@@ -50,6 +50,11 @@ public static class Program
 
       var app = builder.Build();
 
+      if (!app.Environment.IsDevelopment())
+      {
+        app.UseExceptionHandler("/error");
+      }
+
       app.UseSerilogRequestLogging();
 
       // Configure the HTTP request pipeline.
