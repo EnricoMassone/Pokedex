@@ -17,6 +17,12 @@ public class PokemonController : ControllerBase
     _sender = sender;
   }
 
+  /// <summary>
+  /// Gets a Pokemon by name
+  /// </summary>
+  /// <param name="name">The name of the Pokemon to fetch</param>
+  /// <param name="cancellationToken"></param>
+  /// <returns></returns>
   [HttpGet("{name}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
