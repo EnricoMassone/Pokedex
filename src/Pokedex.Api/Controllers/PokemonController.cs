@@ -21,8 +21,11 @@ public class PokemonController : ControllerBase
   /// Gets a Pokemon by name
   /// </summary>
   /// <param name="name">The name of the Pokemon to fetch</param>
-  /// <param name="cancellationToken"></param>
-  /// <returns></returns>
+  /// <param name="cancellationToken">Framework provided <see cref="CancellationToken"/> object</param>
+  /// <returns>Information about the fetched Pokemon</returns>
+  /// <response code="200">Returns an object containing information about the fetched Pokemon</response>
+  /// <response code="404">If the Pokemon being fetched by name does not exist</response>
+  /// <response code="400">If the provided Pokemon name is null or white space</response>
   [HttpGet("{name}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
