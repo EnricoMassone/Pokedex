@@ -4,16 +4,16 @@ using System.Net.Http.Json;
 
 namespace Pokedex.Infrastructure.PokemonApis;
 
-public sealed class PokeApiClient
+public sealed class PokeApiHttpClient
 {
   private readonly HttpClient _httpClient;
 
-  public PokeApiClient(HttpClient httpClient)
+  public PokeApiHttpClient(HttpClient httpClient)
   {
     _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
   }
 
-  public async Task<Option<PokemonSpeciesApiResponse>> GetPokemonByNameAsync(string name, CancellationToken cancellationToken)
+  public async Task<Option<PokemonApiResponse>> GetPokemonByNameAsync(string name, CancellationToken cancellationToken)
   {
     if (string.IsNullOrWhiteSpace(name))
     {
@@ -22,17 +22,17 @@ public sealed class PokeApiClient
 
     var requestUri = BuildGetPokemonSpeciesApiUri(name);
 
-    PokemonSpeciesApiResponse? response;
+    PokemonApiResponse? response;
 
     try
     {
-      response = await _httpClient.GetFromJsonAsync<PokemonSpeciesApiResponse>(
+      response = await _httpClient.GetFromJsonAsync<PokemonApiResponse>(
         requestUri,
         cancellationToken).ConfigureAwait(false);
     }
     catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.NotFound)
     {
-      return Option<PokemonSpeciesApiResponse>.None;
+      return Option<PokemonApiResponse>.None;
     }
 
     return response;

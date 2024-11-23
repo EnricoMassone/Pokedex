@@ -2,7 +2,7 @@
 
 namespace Pokedex.Infrastructure.PokemonApis;
 
-public sealed record PokemonSpeciesApiResponse
+public sealed record PokemonApiResponse
 {
   public required string Name { get; init; }
 
