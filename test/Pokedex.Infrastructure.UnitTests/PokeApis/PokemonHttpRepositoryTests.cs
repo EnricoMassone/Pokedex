@@ -18,12 +18,13 @@ public sealed class PokemonHttpRepositoryTests
     _sut = new PokemonHttpRepository(_httpClientMock.Object);
   }
 
-  [Fact]
-  public async Task GetPokemonByNameAsync_Throws_ArgumentNullException_When_Name_Is_Null()
+  [Theory]
+  [AutoData]
+  public async Task GetPokemonByNameAsync_Throws_ArgumentNullException_When_Name_Is_Null(CancellationToken cancellationToken)
   {
     // ACT
     var exception = await Assert.ThrowsAsync<ArgumentNullException>(
-      () => _sut.GetByNameAsync(null!, CancellationToken.None)
+      () => _sut.GetByNameAsync(null!, cancellationToken)
     );
 
     // ASSERT
