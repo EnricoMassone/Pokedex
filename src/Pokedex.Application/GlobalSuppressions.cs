@@ -10,3 +10,10 @@ using System.Diagnostics.CodeAnalysis;
   "CA1848:Use the LoggerMessage delegates",
   Justification = "This code is not performance critical",
   Scope = "module")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "Implicit casts should not throw exceptions",
+  Scope = "member",
+  Target = "~M:Pokedex.Application.Abstractions.TranslatedDescription.op_Implicit(Pokedex.Application.Abstractions.TranslatedDescription)~System.String")]
