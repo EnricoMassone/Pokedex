@@ -36,6 +36,42 @@ public sealed class GetTranslatedPokemonQueryHandlerTests
 
   [Theory]
   [AutoData]
+  public async Task Handle_Returns_Translated_Version_Of_Pokemon_Returned_By_Repository(
+    Name name,
+    Pokemon originalPokemon,
+    Pokemon translatedPokemon,
+    CancellationToken cancellationToken)
+  {
+    // ARRANGE
+    _repositoryMock
+      .Setup(m => m.GetByNameAsync(name, cancellationToken))
+      .ReturnsAsync(originalPokemon, TimeSpan.FromMilliseconds(value: 5));
+
+    _pokemonTranslatorMock
+      .Setup(m => m.TranslateAsync(originalPokemon, cancellationToken))
+      .ReturnsAsync(translatedPokemon, TimeSpan.FromMilliseconds(value: 5));
+
+    var query = new GetTranslatedPokemonQuery(name);
+
+    // ACT
+    var result = await _sut.Handle(query, cancellationToken);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.HasValue.Should().BeTrue();
+
+    // check result value
+    var queryResponse = result.Value;
+
+    queryResponse.Should().NotBeNull();
+    queryResponse.Name.Should().Be(translatedPokemon.Name);
+    queryResponse.IsLegendary.Should().Be(translatedPokemon.IsLegendary);
+    queryResponse.Habitat.Should().Be(translatedPokemon.Habitat);
+    queryResponse.Description.Should().Be(translatedPokemon.Description);
+  }
+
+  [Theory]
+  [AutoData]
   public async Task Handle_Returns_Empty_Option_When_Repository_Returns_Empty_Option(
     Name name,
     CancellationToken cancellationToken)
