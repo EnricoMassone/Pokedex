@@ -71,7 +71,7 @@ public sealed class PokemonTranslatorTests
 
     _loggerMock.VerifyLog(logger =>
       logger.LogInformation(
-        "Successfully translated Pokemon description using strategy {Strategy}",
+        "Successfully processed Pokemon using translation strategy {Strategy}",
         translationStrategyMock.Object.GetType().Name
       ), Times.Once()
     );

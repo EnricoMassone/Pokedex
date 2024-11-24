@@ -30,7 +30,7 @@ public sealed class PokemonTranslator : IPokemonTranslator
       cancellationToken).ConfigureAwait(false);
 
     _logger.LogInformation(
-      "Successfully translated Pokemon description using strategy {Strategy}",
+      "Successfully processed Pokemon using translation strategy {Strategy}",
       translationStrategy.GetType().Name
     );
 
