@@ -59,7 +59,7 @@ public sealed class PokemonHttpRepositoryTests
 
     _httpClientMock
       .Setup(m => m.GetPokemonByNameAsync(new Name(name), cancellationToken))
-      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByNameAsync(new Name(name), cancellationToken);
@@ -87,7 +87,7 @@ public sealed class PokemonHttpRepositoryTests
     // ARRANGE
     _httpClientMock
       .Setup(m => m.GetPokemonByNameAsync(new Name(name), cancellationToken))
-      .ReturnsAsync(Option<PokemonApiResponse>.None, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(Option<PokemonApiResponse>.None, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByNameAsync(new Name(name), cancellationToken);
@@ -122,7 +122,7 @@ public sealed class PokemonHttpRepositoryTests
 
     _httpClientMock
       .Setup(m => m.GetPokemonByNameAsync(new Name(name), cancellationToken))
-      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByNameAsync(new Name(name), cancellationToken);
@@ -159,7 +159,7 @@ public sealed class PokemonHttpRepositoryTests
 
     _httpClientMock
       .Setup(m => m.GetPokemonByNameAsync(new Name(name), cancellationToken))
-      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByNameAsync(new Name(name), cancellationToken);
@@ -203,7 +203,7 @@ public sealed class PokemonHttpRepositoryTests
 
     _httpClientMock
       .Setup(m => m.GetPokemonByNameAsync(new Name(name), cancellationToken))
-      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByNameAsync(new Name(name), cancellationToken);
@@ -261,7 +261,7 @@ public sealed class PokemonHttpRepositoryTests
 
     _httpClientMock
       .Setup(m => m.GetPokemonByNameAsync(new Name(name), cancellationToken))
-      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(pokemonApiResponse, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByNameAsync(new Name(name), cancellationToken);

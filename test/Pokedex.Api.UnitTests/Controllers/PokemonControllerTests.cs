@@ -33,7 +33,7 @@ public sealed class PokemonControllerTests
 
     _senderMock
       .Setup(m => m.Send(query, cancellationToken))
-      .ReturnsAsync(response, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(response, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByName(name, cancellationToken);
@@ -56,7 +56,7 @@ public sealed class PokemonControllerTests
 
     _senderMock
       .Setup(m => m.Send(query, cancellationToken))
-      .ReturnsAsync(Option<GetPokemonQueryResponse>.None, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(Option<GetPokemonQueryResponse>.None, TimeSpan.FromMilliseconds(value: 5));
 
     // ACT
     var result = await _sut.GetByName(name, cancellationToken);
