@@ -9,13 +9,13 @@ using Pokedex.Domain.Pokemons;
 
 namespace Pokedex.Application.UnitTests.Translations.GetTranslatedPokemon.Strategies;
 
-public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
+public sealed class ShakespearePokemonDescriptionTranslationStrategyTests
 {
   private readonly Mock<IFunTranslationsApiHttpClient> _httpClientMock;
   private readonly Mock<ILogger<ShakespearePokemonDescriptionTranslationStrategy>> _loggerMock;
   private readonly ShakespearePokemonDescriptionTranslationStrategy _sut;
 
-  public ShakespearePokemonDescriptionTranslationStrategyTest()
+  public ShakespearePokemonDescriptionTranslationStrategyTests()
   {
     _httpClientMock = new Mock<IFunTranslationsApiHttpClient>(MockBehavior.Loose);
     _loggerMock = new Mock<ILogger<ShakespearePokemonDescriptionTranslationStrategy>>(MockBehavior.Loose);
