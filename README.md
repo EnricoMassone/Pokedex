@@ -20,7 +20,7 @@ If you want to learn more about the available endpoints, you can use the include
  By doing so, the following happens:
   - a Docker image is created, by using the project [Dockerfile](./Dockerfile)
   - a Docker container is created from the Docker image and then is started
-  - port 3000 of the local machine is mapped to port 8080 of the Docker container. If port 3000 of the local machine is not available, you can change the port mapping from the project [compose.yaml file](./compose.yaml)
+  - port `3000` of the local machine is mapped to port `8080` of the Docker container. If port `3000` of the local machine is not available, you can change the port mapping from the project [compose.yaml file](./compose.yaml)
   - by default the ASP.NET core environment is set to `Production`. If you want to run a different environment (e.g.: `Development`) you can do that by changing the `environment` section of the project [compose.yaml file](./compose.yaml)
 
 After the project is started, you can access the Pokemon endpoint by issuing the following HTTP request on your machine: 
