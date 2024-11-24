@@ -39,7 +39,7 @@ This project does not include any support to TLS, authentication and authorizati
 
 Usually, in micro service architectures the internal communication between services is implemented by using plain HTTP requests and the TLS support is offloaded to the infrastructure and pushed at the edge of the system (e.g.: API gateway). This way, external callers can interact with the endpoints by using HTTPS at the edge of the system and there is no need to have TLS certificates for each and every micro service. 
 
-A common approach to implement authentication in Web API services is using `OAuth2` access tokens issued by an identity server (e.g.: `Microsoft Entra ID`). Access tokens are usually in the form of JWT tokens. The API client authenticate itself witht he identity server and gets an access token in return, then the access token is included in each and every HTTP request to the Web API service inside the [Authorization HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
+A common approach to implement authentication in Web API services is using `OAuth2` access tokens issued by an identity server (e.g.: `Microsoft Entra ID`). Access tokens are usually in the form of JWT tokens. The API client authenticate itself with the identity server and gets an access token in return, then the access token is included in each and every HTTP request to the Web API service inside the [Authorization HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 
 Authorization policies are [fully supported in ASP.NET core](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-9.0) and are based on the claims associated with the authenticated principal. 
 
