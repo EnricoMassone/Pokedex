@@ -34,7 +34,7 @@ To access the translated Pokemon endpoint, you can issue the following HTTP requ
 ## Possible improvements
 As explained above, this project is **not** production ready. Please, consider it a simple proof of concept. Several possible improvements are described in the following paragraphs. 
 
-### TLS authetication and authorization
+### TLS, authetication and authorization
 This project does not include any support to TLS, authentication and authorization. 
 
 Usually, in micro service architectures the internal communication between services is implemented by using plain HTTP and the TLS support is offloaded to sidecar containers or the infrastructure (e.g.: API gateway). 
@@ -55,3 +55,19 @@ Another benefit obtained by caching the responses from PokeAPI and FunTranslatio
 This project offers a very simple support to retry policies, which are applied in case of transient HTTP errors when calling the PokéAPI and the FunTranslations API. See [here](https://github.com/EnricoMassone/Pokedex/blob/c9a9b7aef95b82e8a01c151bd7d2811dc4d6c358/src/Pokedex.Infrastructure/DependencyInjectionConfiguration.cs#L36) and [here](https://github.com/EnricoMassone/Pokedex/blob/c9a9b7aef95b82e8a01c151bd7d2811dc4d6c358/src/Pokedex.Infrastructure/DependencyInjectionConfiguration.cs#L58) for more details on the implementation. 
 
 A common approach is to combine retry policies with a circuit breaker, which is used to avoid overloading a server affected by temporary issues with incoming HTTP requests. By doing so, we can avoid sending HTTP requests to the PokéAPI and the FunTranslations API for a while, to let these services recover from transient errors and become available again.
+
+### Logging and observability
+This service offers only a very basic logging implementation, which is done using the [Serilog console sink](https://github.com/serilog/serilog-sinks-console).
+
+In a real production environment it is better to store logs in a centralized log store, which is easily queryable. Common services used to do that are SQL Server, MongoDB or Elasticsearch. 
+
+A further step to improve the observability of the system is using a dedicated APM (Application Performance Monitoring) service, to monitor the Web API service. Common services used to do that are Azure Application Insights and Datadog, among the others. APM services can act as centralized log stores, but they offer many other capabilities: 
+ - a lot of useful metrics are collected (e.g.: CPU usage, memory usage, response time of incoming HTTP requests)
+ - dashboards to visualize the collected metrics can be defined and modified over time
+ - alerts can be set up, based on collected metrics and application performances
+ - a detailed tracing of the incoming HTTP requests is available. This tracing highlights all the dependencies used to serve incoming requests (e.g.: database queries and requests to third-party Web API services) and their respective response time. This can be useful to detect bottlenecks and to improve application performance.
+
+ ### Other improvements
+ There are many other possible improvements: 
+  - error handling and logging of the outbound HTTP requests can be improved. For instance, we can log the HTTP status code returned by each request and implement error handling strategies in case of unexpected response content types (e.g.: `text/plain` instead of `application/json`) and JSON content deserialization errors.
+  - adding liveness and readiness endpoints to the service, which can be useful if the service will be hosted in Kubernetes. 
