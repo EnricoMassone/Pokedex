@@ -30,3 +30,10 @@ using System.Diagnostics.CodeAnalysis;
   "CA1848:Use the LoggerMessage delegates",
   Justification = "This project does not use LoggerMessage delegates",
   Scope = "module")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.Strategies.ShakespearePokemonDescriptionTranslationStrategyTest")]
