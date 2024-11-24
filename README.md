@@ -26,3 +26,9 @@ If you want to learn more about the available endpoints, you can use the include
 After the project is started, you can access the Pokemon endpoint by issuing the following HTTP request on your machine: 
 
  `GET http://localhost:3000/pokemon/{pokemon-name}`
+
+To access the translated Pokemon endpoint, you can issue the following HTTP request on your machine:
+
+ `GET http://localhost:3000/pokemon/translated/{pokemon-name}`
+
+## Possible improvements to make this project production ready
