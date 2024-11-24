@@ -5,7 +5,7 @@ using Pokedex.Application.Pokemons.GetPokemon;
 using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 
-namespace Pokedex.Application.UnitTests.Pokemons;
+namespace Pokedex.Application.UnitTests.Pokemons.GetPokemon;
 
 public sealed class GetPokemonQueryHandlerTests
 {

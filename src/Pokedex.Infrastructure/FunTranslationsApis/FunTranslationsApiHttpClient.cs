@@ -1,4 +1,4 @@
-﻿using Pokedex.Application.Translations.Abstractions;
+﻿using Pokedex.Application.Translations.GetTranslatedPokemon.Abstractions;
 using Pokedex.Domain.Abstractions;
 using System.Net.Http.Json;
 

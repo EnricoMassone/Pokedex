@@ -2,12 +2,12 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Pokedex.Application.Translations.Services;
+using Pokedex.Application.Translations.GetTranslatedPokemon.Services;
 using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 using Pokedex.Framework.Patterns.Strategies;
 
-namespace Pokedex.Application.UnitTests.Translations.Services;
+namespace Pokedex.Application.UnitTests.Translations.GetTranslatedPokemon.Services;
 
 public sealed class PokemonTranslatorTests
 {

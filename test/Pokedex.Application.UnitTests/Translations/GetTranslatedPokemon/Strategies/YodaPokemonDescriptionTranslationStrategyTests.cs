@@ -2,25 +2,25 @@
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Pokedex.Application.Translations.Abstractions;
-using Pokedex.Application.Translations.Strategies;
+using Pokedex.Application.Translations.GetTranslatedPokemon.Abstractions;
+using Pokedex.Application.Translations.GetTranslatedPokemon.Strategies;
 using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 
-namespace Pokedex.Application.UnitTests.Translations.Strategies;
+namespace Pokedex.Application.UnitTests.Translations.GetTranslatedPokemon.Strategies;
 
-public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
+public sealed class YodaPokemonDescriptionTranslationStrategyTests
 {
   private readonly Mock<IFunTranslationsApiHttpClient> _httpClientMock;
-  private readonly Mock<ILogger<ShakespearePokemonDescriptionTranslationStrategy>> _loggerMock;
-  private readonly ShakespearePokemonDescriptionTranslationStrategy _sut;
+  private readonly Mock<ILogger<YodaPokemonDescriptionTranslationStrategy>> _loggerMock;
+  private readonly YodaPokemonDescriptionTranslationStrategy _sut;
 
-  public ShakespearePokemonDescriptionTranslationStrategyTest()
+  public YodaPokemonDescriptionTranslationStrategyTests()
   {
     _httpClientMock = new Mock<IFunTranslationsApiHttpClient>(MockBehavior.Loose);
-    _loggerMock = new Mock<ILogger<ShakespearePokemonDescriptionTranslationStrategy>>(MockBehavior.Loose);
+    _loggerMock = new Mock<ILogger<YodaPokemonDescriptionTranslationStrategy>>(MockBehavior.Loose);
 
-    _sut = new ShakespearePokemonDescriptionTranslationStrategy(
+    _sut = new YodaPokemonDescriptionTranslationStrategy(
       _httpClientMock.Object,
       _loggerMock.Object);
   }
@@ -39,7 +39,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
 
   [Theory]
   [AutoData]
-  public void CanHandle_Returns_False_When_Pokemon_Habitat_Is_Cave(Pokemon pokemon)
+  public void CanHandle_Returns_True_When_Pokemon_Habitat_Is_Cave(Pokemon pokemon)
   {
     // ARRANGE
     var data = pokemon with { Habitat = PokemonHabitats.Cave, IsLegendary = false };
@@ -48,12 +48,12 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     var result = _sut.CanHandle(data);
 
     // ASSERT
-    result.Should().BeFalse();
+    result.Should().BeTrue();
   }
 
   [Theory]
   [AutoData]
-  public void CanHandle_Returns_False_When_Pokemon_Is_Legendary(Pokemon pokemon)
+  public void CanHandle_Returns_True_When_Pokemon_Is_Legendary(Pokemon pokemon)
   {
     // ARRANGE
     var data = pokemon with { Habitat = "forest", IsLegendary = true };
@@ -62,12 +62,12 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     var result = _sut.CanHandle(data);
 
     // ASSERT
-    result.Should().BeFalse();
+    result.Should().BeTrue();
   }
 
   [Theory]
   [AutoData]
-  public void CanHandle_Returns_False_When_Pokemon_Habitat_Is_Cave_And_Pokemon_Is_Legendary(Pokemon pokemon)
+  public void CanHandle_Returns_True_When_Pokemon_Habitat_Is_Cave_And_Pokemon_Is_Legendary(Pokemon pokemon)
   {
     // ARRANGE
     var data = pokemon with { Habitat = PokemonHabitats.Cave, IsLegendary = true };
@@ -76,12 +76,12 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     var result = _sut.CanHandle(data);
 
     // ASSERT
-    result.Should().BeFalse();
+    result.Should().BeTrue();
   }
 
   [Theory]
   [AutoData]
-  public void CanHandle_Returns_True_When_Pokemon_Habitat_Is_Not_Cave_And_Pokemon_Is_Not_Legendary(Pokemon pokemon)
+  public void CanHandle_Returns_False_When_Pokemon_Habitat_Is_Not_Cave_And_Pokemon_Is_Not_Legendary(Pokemon pokemon)
   {
     // ARRANGE
     var data = pokemon with { Habitat = "forest", IsLegendary = false };
@@ -90,7 +90,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     var result = _sut.CanHandle(data);
 
     // ASSERT
-    result.Should().BeTrue();
+    result.Should().BeFalse();
   }
 
   [Theory]
@@ -114,7 +114,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     CancellationToken cancellationToken)
   {
     // ARRANGE
-    var data = pokemon with { Habitat = "forest", IsLegendary = true };
+    var data = pokemon with { Habitat = "forest", IsLegendary = false };
 
     // ACT
     var exception = await Assert.ThrowsAsync<InvalidOperationException>(
@@ -122,7 +122,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     );
 
     // ASSERT
-    exception.Message.Should().Be("Strategy ShakespearePokemonDescriptionTranslationStrategy cannot handle the provided data of type Pokemon");
+    exception.Message.Should().Be("Strategy YodaPokemonDescriptionTranslationStrategy cannot handle the provided data of type Pokemon");
   }
 
   [Theory]
@@ -135,7 +135,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     CancellationToken cancellationToken)
   {
     // ARRANGE
-    var data = pokemon with { Habitat = "forest", IsLegendary = false, Description = originalDescription };
+    var data = pokemon with { IsLegendary = true, Description = originalDescription };
 
     // ACT
     var result = await _sut.HandleAsync(data, cancellationToken);
@@ -151,17 +151,17 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
 
   [Theory]
   [AutoData]
-  public async Task HandleAsync_Translates_Pokemon_Description_Using_Shakespeare_Translation_Endpoint(
+  public async Task HandleAsync_Translates_Pokemon_Description_Using_Yoda_Translation_Endpoint(
     Pokemon pokemon,
     string originalDescription,
     FunTranslationsApiResponse funTranslationsApiResponse,
     CancellationToken cancellationToken)
   {
     // ARRANGE
-    var data = pokemon with { Habitat = "forest", IsLegendary = false, Description = originalDescription };
+    var data = pokemon with { IsLegendary = true, Description = originalDescription };
 
     _httpClientMock
-      .Setup(m => m.ApplyShakespeareTranslationAsync(It.IsAny<Text>(), It.IsAny<CancellationToken>()))
+      .Setup(m => m.ApplyYodaTranslationAsync(It.IsAny<Text>(), It.IsAny<CancellationToken>()))
       .ReturnsAsync(Result.Success(funTranslationsApiResponse), TimeSpan.FromMilliseconds(5));
 
     // ACT
@@ -174,7 +174,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     // check mock calls
     _httpClientMock
       .Verify(
-        m => m.ApplyShakespeareTranslationAsync(new Text(originalDescription), cancellationToken),
+        m => m.ApplyYodaTranslationAsync(new Text(originalDescription), cancellationToken),
         Times.Once()
       );
 
@@ -185,17 +185,17 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
 
   [Theory]
   [AutoData]
-  public async Task HandleAsync_Returns_Original_Pokemon_Description_When_Shakespeare_Translation_Endpoint_Fails(
+  public async Task HandleAsync_Returns_Original_Pokemon_Description_When_Yoda_Translation_Endpoint_Fails(
     Pokemon pokemon,
     string originalDescription,
     Error error,
     CancellationToken cancellationToken)
   {
     // ARRANGE
-    var data = pokemon with { Habitat = "forest", IsLegendary = false, Description = originalDescription };
+    var data = pokemon with { IsLegendary = true, Description = originalDescription };
 
     _httpClientMock
-      .Setup(m => m.ApplyShakespeareTranslationAsync(It.IsAny<Text>(), It.IsAny<CancellationToken>()))
+      .Setup(m => m.ApplyYodaTranslationAsync(It.IsAny<Text>(), It.IsAny<CancellationToken>()))
       .ReturnsAsync(Result.Failure<FunTranslationsApiResponse>(error), TimeSpan.FromMilliseconds(5));
 
     // ACT
@@ -208,7 +208,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
     // check mock calls
     _httpClientMock
       .Verify(
-        m => m.ApplyShakespeareTranslationAsync(new Text(originalDescription), cancellationToken),
+        m => m.ApplyYodaTranslationAsync(new Text(originalDescription), cancellationToken),
         Times.Once()
       );
 
@@ -216,7 +216,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
 
     _loggerMock.VerifyLog(
       logger => logger.LogWarning(
-        "Shakespeare translation of Pokemon description failed with error code {ErrorCode}. Reason: {Reason}",
+        "Yoda translation of Pokemon description failed with error code {ErrorCode}. Reason: {Reason}",
         error.Code,
         error.Description), Times.Once()
     );

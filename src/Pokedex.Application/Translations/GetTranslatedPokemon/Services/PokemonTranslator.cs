@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using Pokedex.Application.Translations.Abstractions;
+using Pokedex.Application.Translations.GetTranslatedPokemon.Abstractions;
 using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 using Pokedex.Framework.Patterns.Strategies;
 
-namespace Pokedex.Application.Translations.Services;
+namespace Pokedex.Application.Translations.GetTranslatedPokemon.Services;
 
 public sealed class PokemonTranslator : IPokemonTranslator
 {
