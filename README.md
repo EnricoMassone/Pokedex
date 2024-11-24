@@ -10,6 +10,9 @@ If you want to learn more about the available endpoints, you can use the include
 
  **IMPORTANT**: Swagger UI is only included when the ASP.NET core environment is set to `Development`. Read the following section for more information on this. 
 
+ ## Project architecture
+ The architecture of this project has been inspired by the [Clean Architecture template](https://github.com/jasontaylordev/CleanArchitecture) for ASP.NET core projects. 
+
  ## How to run
  To run the project you need to install [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/). These tools are available for all the major operating systems. If you need help to install them on your machine, please refer to the [official documentation](https://docs.docker.com/get-started/get-docker/).
 
