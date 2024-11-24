@@ -3,7 +3,7 @@ using Pokedex.Application.Abstractions.Behaviors;
 
 namespace Pokedex.Application;
 
-public static class DependencyInjectionConfiguragtion
+public static class DependencyInjectionConfiguration
 {
   public static IServiceCollection AddApplication(this IServiceCollection services)
   {
@@ -11,7 +11,7 @@ public static class DependencyInjectionConfiguragtion
 
     services.AddMediatR(configuration =>
     {
-      configuration.RegisterServicesFromAssembly(typeof(DependencyInjectionConfiguragtion).Assembly);
+      configuration.RegisterServicesFromAssembly(typeof(DependencyInjectionConfiguration).Assembly);
       configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
     });
 
