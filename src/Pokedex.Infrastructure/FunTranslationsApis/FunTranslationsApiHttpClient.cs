@@ -5,8 +5,8 @@ namespace Pokedex.Infrastructure.FunTranslationsApis;
 
 public sealed class FunTranslationsApiHttpClient : IFunTranslationsApiHttpClient
 {
-  private static readonly Uri ShakespeareEndpointUri = new("shakespeare", UriKind.Relative);
-  private static readonly Uri YodaEndpointUri = new("yoda", UriKind.Relative);
+  private static readonly Uri ShakespeareEndpointUri = new("translate/shakespeare", UriKind.Relative);
+  private static readonly Uri YodaEndpointUri = new("translate/yoda", UriKind.Relative);
 
   private readonly HttpClient _httpClient;
 
