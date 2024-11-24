@@ -37,7 +37,7 @@ As explained above, this project is **not** production ready. Please, consider i
 ### TLS, authetication and authorization
 This project does not include any support to TLS, authentication and authorization. 
 
-Usually, in micro service architectures the internal communication between services is implemented by using plain HTTP and the TLS support is offloaded to sidecar containers or the infrastructure (e.g.: API gateway). 
+Usually, in micro service architectures the internal communication between services is implemented by using plain HTTP requests and the TLS support is offloaded to the infrastructure and pushed at the edge of the system (e.g.: API gateway). This way external callers can interact with the endpoints by using HTTPS at the edge (that is, the entry point) of the system.  
 
 A common approach to implement authentication in Web API services is using `OAuth2` access tokens issued by an identity server (e.g.: `Microsoft Entra ID`). Access tokens are usually in the form of JWT tokens. The API client authenticate itself witht he identity server and gets an access token in return, then the access token is included in each and every HTTP request to the Web API service inside the [Authorization HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
 
