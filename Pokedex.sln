@@ -40,6 +40,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokedex.Framework.UnitTests", "test\Pokedex.Framework.UnitTests\Pokedex.Framework.UnitTests.csproj", "{EC2203EF-FBDE-4E8D-865C-5D19804A97F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,10 @@ Global
 		{E1D32CA3-E418-4501-B384-A5A259A86DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1D32CA3-E418-4501-B384-A5A259A86DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1D32CA3-E418-4501-B384-A5A259A86DEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC2203EF-FBDE-4E8D-865C-5D19804A97F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC2203EF-FBDE-4E8D-865C-5D19804A97F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC2203EF-FBDE-4E8D-865C-5D19804A97F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC2203EF-FBDE-4E8D-865C-5D19804A97F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,5 +102,6 @@ Global
 		{4E62F3DE-1156-4C9F-A923-941FBA182708} = {AB688FD5-9113-44B3-AC41-29CAB1223149}
 		{DA5E9CFF-97BA-47A2-A29A-9F9A13BC93E1} = {AB688FD5-9113-44B3-AC41-29CAB1223149}
 		{E1D32CA3-E418-4501-B384-A5A259A86DEC} = {0840B9E8-F09D-49B5-9A49-ECB6AD1F3FB6}
+		{EC2203EF-FBDE-4E8D-865C-5D19804A97F3} = {0840B9E8-F09D-49B5-9A49-ECB6AD1F3FB6}
 	EndGlobalSection
 EndGlobal
