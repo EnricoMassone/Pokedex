@@ -3,6 +3,7 @@ using FluentAssertions;
 using Pokedex.Domain.Abstractions;
 using Pokedex.Infrastructure.FunTranslationsApis;
 using RichardSzalay.MockHttp;
+using System.Net;
 
 namespace Pokedex.Infrastructure.UnitTests.FunTranslationsApis;
 
@@ -16,10 +17,12 @@ public sealed class FunTranslationsApiHttpClientTests
 
     using var mockHttp = new MockHttpMessageHandler();
 
-    mockHttp.When("yoda")
+    mockHttp.When(HttpMethod.Post, "https://server.example.com/translate/yoda")
             .Respond("application/json", json);
 
     using var httpClient = mockHttp.ToHttpClient();
+
+    httpClient.BaseAddress = new Uri("https://server.example.com/");
 
     var sut = new FunTranslationsApiHttpClient(httpClient);
 
@@ -64,6 +67,99 @@ public sealed class FunTranslationsApiHttpClientTests
     translation.Contents.Translated.Should().Be("Lost a planet,  master obiwan has.");
 
     // check executed HTTP requests
+    mockHttp.VerifyNoOutstandingExpectation();
+  }
+
+  [Theory]
+  [AutoData]
+  public async Task ApplyYodaTranslationAsync_Returns_Failure_Result_When_FunTranslationsApi_Returns_429(Text text)
+  {
+    // ARRANGE
+    using var mockHttp = new MockHttpMessageHandler();
+
+    mockHttp.Expect(HttpMethod.Post, "https://server.example.com/translate/yoda")
+            .Respond(HttpStatusCode.TooManyRequests);
+
+    using var httpClient = mockHttp.ToHttpClient();
+
+    httpClient.BaseAddress = new Uri("https://server.example.com/");
+
+    var sut = new FunTranslationsApiHttpClient(httpClient);
+
+    // ACT
+    var result = await sut.ApplyYodaTranslationAsync(text, CancellationToken.None);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.IsSuccess.Should().BeFalse();
+
+    // check error
+    var error = result.Error;
+
+    error.Should().Be(FunTranslationsApiErrors.TooManyRequests);
+
+    // check executed HTTP requests
+    mockHttp.VerifyNoOutstandingExpectation();
+  }
+
+  [Theory]
+  [AutoData]
+  public async Task ApplyYodaTranslationAsync_Returns_Failure_Result_When_FunTranslationsApi_Returns_200_With_Null_Json_Content(Text text)
+  {
+    // ARRANGE
+    using var mockHttp = new MockHttpMessageHandler();
+
+    mockHttp.Expect(HttpMethod.Post, "https://server.example.com/translate/yoda")
+            .Respond("application/json", "null");
+
+    using var httpClient = mockHttp.ToHttpClient();
+
+    httpClient.BaseAddress = new Uri("https://server.example.com/");
+
+    var sut = new FunTranslationsApiHttpClient(httpClient);
+
+    // ACT
+    var result = await sut.ApplyYodaTranslationAsync(text, CancellationToken.None);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.IsSuccess.Should().BeFalse();
+
+    // check error
+    var error = result.Error;
+
+    error.Should().Be(FunTranslationsApiErrors.NullResponseJsonContent);
+
+    // check executed HTTP requests
+    mockHttp.VerifyNoOutstandingExpectation();
+  }
+
+  [Theory]
+  [InlineAutoData(HttpStatusCode.BadRequest)]
+  [InlineAutoData(HttpStatusCode.Unauthorized)]
+  [InlineAutoData(HttpStatusCode.InternalServerError)]
+  public async Task ApplyYodaTranslationAsync_Throws_HttpRequestException_When_FunTranslationsApi_Returns_Non_Success_Status_Code(
+    HttpStatusCode statusCode,
+    Text text)
+  {
+    // ARRANGE
+    using var mockHttp = new MockHttpMessageHandler();
+
+    mockHttp.Expect(HttpMethod.Post, "https://server.example.com/translate/yoda")
+            .Respond(statusCode);
+
+    using var httpClient = mockHttp.ToHttpClient();
+
+    httpClient.BaseAddress = new Uri("https://server.example.com/");
+
+    var sut = new FunTranslationsApiHttpClient(httpClient);
+
+    // ACT
+    _ = await Assert.ThrowsAsync<HttpRequestException>(
+      () => sut.ApplyYodaTranslationAsync(text, CancellationToken.None)
+    );
+
+    // ASSERT
     mockHttp.VerifyNoOutstandingExpectation();
   }
 }
