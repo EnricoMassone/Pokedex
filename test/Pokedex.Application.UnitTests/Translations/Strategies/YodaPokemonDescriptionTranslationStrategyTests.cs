@@ -218,7 +218,7 @@ public sealed class YodaPokemonDescriptionTranslationStrategyTests
       logger => logger.LogWarning(
         "Yoda translation of Pokemon description failed with error code {ErrorCode}. Reason: {Reason}",
         error.Code,
-        error.Description)
+        error.Description), Times.Once()
     );
 
     _loggerMock.VerifyNoOtherCalls();

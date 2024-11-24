@@ -37,3 +37,10 @@ using System.Diagnostics.CodeAnalysis;
   Justification = "We can skip validation because this argument is provided by Autofixture",
   Scope = "type",
   Target = "~T:Pokedex.Application.UnitTests.Translations.Strategies.ShakespearePokemonDescriptionTranslationStrategyTest")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "<Pending>",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.Services.PokemonTranslatorTests")]

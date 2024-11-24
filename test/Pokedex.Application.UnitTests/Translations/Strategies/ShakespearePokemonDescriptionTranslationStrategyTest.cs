@@ -218,7 +218,7 @@ public sealed class ShakespearePokemonDescriptionTranslationStrategyTest
       logger => logger.LogWarning(
         "Shakespeare translation of Pokemon description failed with error code {ErrorCode}. Reason: {Reason}",
         error.Code,
-        error.Description)
+        error.Description), Times.Once()
     );
 
     _loggerMock.VerifyNoOtherCalls();
