@@ -1,5 +1,5 @@
 # Pokedex
-Welcome to Pokedex! This is a toy project, used to showcase how to implement a Web API by using ASP.NET core 8 with Controllers.
+Welcome to Pokedex! This is a toy project, used to showcase how to implement a Web API by using ASP.NET core 8 with controllers.
 This project contains the following API endpoints: 
  - `GET /pokemon/{pokemon-name}`: this endpoint returns basic information on the searched Pokemon. 
  - `GET /pokemon/translated/{pokemon-name}`: this endpoint is similar to the previous one, but in this case the Pokemon description is translated using the [FunTranslations API](https://funtranslations.com/)
