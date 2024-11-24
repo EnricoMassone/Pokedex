@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Pokedex.Application.Translations.Abstractions;
 using Pokedex.Application.Translations.Strategies;
+using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 
 namespace Pokedex.Application.UnitTests.Translations.Strategies;
@@ -16,8 +17,8 @@ public sealed class YodaPokemonDescriptionTranslationStrategyTests
 
   public YodaPokemonDescriptionTranslationStrategyTests()
   {
-    _httpClientMock = new Mock<IFunTranslationsApiHttpClient>(MockBehavior.Strict);
-    _loggerMock = new Mock<ILogger<YodaPokemonDescriptionTranslationStrategy>>(MockBehavior.Strict);
+    _httpClientMock = new Mock<IFunTranslationsApiHttpClient>(MockBehavior.Loose);
+    _loggerMock = new Mock<ILogger<YodaPokemonDescriptionTranslationStrategy>>(MockBehavior.Loose);
 
     _sut = new YodaPokemonDescriptionTranslationStrategy(
       _httpClientMock.Object,
@@ -90,5 +91,136 @@ public sealed class YodaPokemonDescriptionTranslationStrategyTests
 
     // ASSERT
     result.Should().BeFalse();
+  }
+
+  [Theory]
+  [AutoData]
+  public async Task HandleAsync_Throws_ArgumentNullException_When_Data_Is_Null(
+    CancellationToken cancellationToken)
+  {
+    // ACT
+    var exception = await Assert.ThrowsAsync<ArgumentNullException>(
+      () => _sut.HandleAsync(null!, cancellationToken)
+    );
+
+    // ASSERT
+    exception.ParamName.Should().Be("data");
+  }
+
+  [Theory]
+  [AutoData]
+  public async Task HandleAsync_Throws_InvalidOperationException_When_Data_Cannot_Be_Handled(
+    Pokemon pokemon,
+    CancellationToken cancellationToken)
+  {
+    // ARRANGE
+    var data = pokemon with { Habitat = "forest", IsLegendary = false };
+
+    // ACT
+    var exception = await Assert.ThrowsAsync<InvalidOperationException>(
+      () => _sut.HandleAsync(data, cancellationToken)
+    );
+
+    // ASSERT
+    exception.Message.Should().Be("Strategy YodaPokemonDescriptionTranslationStrategy cannot handle the provided data of type Pokemon");
+  }
+
+  [Theory]
+  [InlineAutoData(null)]
+  [InlineAutoData("")]
+  [InlineAutoData("   ")]
+  public async Task HandleAsync_Does_Not_Translate_Pokemon_Description_If_It_Is_Null_Or_White_Space(
+    string? originalDescription,
+    Pokemon pokemon,
+    CancellationToken cancellationToken)
+  {
+    // ARRANGE
+    var data = pokemon with { IsLegendary = true, Description = originalDescription };
+
+    // ACT
+    var result = await _sut.HandleAsync(data, cancellationToken);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.Value.Should().Be(originalDescription);
+
+    // check mock calls
+    _httpClientMock.VerifyNoOtherCalls();
+    _loggerMock.VerifyNoOtherCalls();
+  }
+
+  [Theory]
+  [AutoData]
+  public async Task HandleAsync_Translates_Pokemon_Description_Using_Yoda_Translation_Endpoint(
+    Pokemon pokemon,
+    string originalDescription,
+    FunTranslationsApiResponse funTranslationsApiResponse,
+    CancellationToken cancellationToken)
+  {
+    // ARRANGE
+    var data = pokemon with { IsLegendary = true, Description = originalDescription };
+
+    _httpClientMock
+      .Setup(m => m.ApplyYodaTranslationAsync(It.IsAny<Text>(), It.IsAny<CancellationToken>()))
+      .ReturnsAsync(Result.Success(funTranslationsApiResponse), TimeSpan.FromMilliseconds(5));
+
+    // ACT
+    var result = await _sut.HandleAsync(data, cancellationToken);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.Value.Should().Be(funTranslationsApiResponse.Contents.Translated);
+
+    // check mock calls
+    _httpClientMock
+      .Verify(
+        m => m.ApplyYodaTranslationAsync(new Text(originalDescription), cancellationToken),
+        Times.Once()
+      );
+
+    _httpClientMock.VerifyNoOtherCalls();
+
+    _loggerMock.VerifyNoOtherCalls();
+  }
+
+  [Theory]
+  [AutoData]
+  public async Task HandleAsync_Returns_Original_Pokemon_Description_When_Yoda_Translation_Endpoint_Fails(
+    Pokemon pokemon,
+    string originalDescription,
+    Error error,
+    CancellationToken cancellationToken)
+  {
+    // ARRANGE
+    var data = pokemon with { IsLegendary = true, Description = originalDescription };
+
+    _httpClientMock
+      .Setup(m => m.ApplyYodaTranslationAsync(It.IsAny<Text>(), It.IsAny<CancellationToken>()))
+      .ReturnsAsync(Result.Failure<FunTranslationsApiResponse>(error), TimeSpan.FromMilliseconds(5));
+
+    // ACT
+    var result = await _sut.HandleAsync(data, cancellationToken);
+
+    // ASSERT
+    result.Should().NotBeNull();
+    result.Value.Should().Be(originalDescription);
+
+    // check mock calls
+    _httpClientMock
+      .Verify(
+        m => m.ApplyYodaTranslationAsync(new Text(originalDescription), cancellationToken),
+        Times.Once()
+      );
+
+    _httpClientMock.VerifyNoOtherCalls();
+
+    _loggerMock.VerifyLog(
+      logger => logger.LogWarning(
+        "Yoda translation of Pokemon description failed with error code {ErrorCode}. Reason: {Reason}",
+        error.Code,
+        error.Description)
+    );
+
+    _loggerMock.VerifyNoOtherCalls();
   }
 }

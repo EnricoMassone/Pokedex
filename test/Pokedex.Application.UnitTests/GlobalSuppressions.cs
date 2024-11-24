@@ -24,3 +24,9 @@ using System.Diagnostics.CodeAnalysis;
   Justification = "We can skip validation because this argument is provided by Autofixture",
   Scope = "type",
   Target = "~T:Pokedex.Application.UnitTests.Translations.Strategies.YodaPokemonDescriptionTranslationStrategyTests")]
+
+[assembly: SuppressMessage(
+  "Performance",
+  "CA1848:Use the LoggerMessage delegates",
+  Justification = "This project does not use LoggerMessage delegates",
+  Scope = "module")]
