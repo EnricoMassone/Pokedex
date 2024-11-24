@@ -31,4 +31,27 @@ To access the translated Pokemon endpoint, you can issue the following HTTP requ
 
  `GET http://localhost:3000/pokemon/translated/{pokemon-name}`
 
-## Possible improvements to make this project production ready
+## Possible improvements
+As explained above, this project is **not** production ready. Please, consider it a simple proof of concept. Several possible improvements are described in the following paragraphs. 
+
+### TLS authetication and authorization
+This project does not include any support to TLS, authentication and authorization. 
+
+Usually, in micro service architectures the internal communication between services is implemented by using plain HTTP and the TLS support is offloaded to sidecar containers or the infrastructure (e.g.: API gateway). 
+
+A common approach to implement authentication in Web API services is using `OAuth2` access tokens issued by an identity server (e.g.: `Microsoft Entra ID`). Access tokens are usually in the form of JWT tokens. The API client authenticate itself witht he identity server and gets an access token in return, then the access token is included in each and every HTTP request to the Web API service inside the [Authorization HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization).
+
+Authorization policies are [fully supported in ASP.NET core](https://learn.microsoft.com/en-us/aspnet/core/security/authorization/policies?view=aspnetcore-9.0) and are based on the claims associated with the authenticated principal. 
+
+### Caching the result of outbound HTTP requests
+This project gets Pokemon data from the [PokéAPI](https://pokeapi.co/) and translations from the [FunTranslations API](https://funtranslations.com/).
+
+The results obtained by calling these endpoints can safely be cache, since we don't expect Pokemon information and text translations to change often. By doing so, performance can be improved a lot, since a lot of HTTP requests can be saved and responses are read directly from a cache. The simplest caching solution is using the [ASP.NET core memory cache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-9.0), a common solution to implement a distributed cache is using [Redis](https://redis.io/). 
+A very nice library to implement advanced caching strategies in ASP.NET core applications is [Fusion Cache](https://github.com/ZiggyCreatures/FusionCache). 
+
+Another benefit obtained by caching the responses from PokeAPI and FunTranslations API is to avoid hitting the rate-limit threshold, which is quite aggressive for the free version of these API services.
+
+### Resiliency of the outbound HTTP requests
+This project offers a very simple support to retry policies, which are applied in case of transient HTTP errors when calling the PokéAPI and the FunTranslations API. See [here](https://github.com/EnricoMassone/Pokedex/blob/c9a9b7aef95b82e8a01c151bd7d2811dc4d6c358/src/Pokedex.Infrastructure/DependencyInjectionConfiguration.cs#L36) and [here](https://github.com/EnricoMassone/Pokedex/blob/c9a9b7aef95b82e8a01c151bd7d2811dc4d6c358/src/Pokedex.Infrastructure/DependencyInjectionConfiguration.cs#L58) for more details on the implementation. 
+
+A common approach is to combine retry policies with a circuit breaker, which is used to avoid overloading a server affected by temporary issues with incoming HTTP requests. By doing so, we can avoid sending HTTP requests to the PokéAPI and the FunTranslations API for a while, to let these services recover from transient errors and become available again.
