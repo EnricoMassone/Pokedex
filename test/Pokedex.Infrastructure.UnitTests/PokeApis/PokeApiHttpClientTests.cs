@@ -16,10 +16,12 @@ public sealed class PokeApiHttpClientTests
 
     using var mockHttp = new MockHttpMessageHandler();
 
-    mockHttp.When("api/v2/pokemon-species/*")
+    mockHttp.When(HttpMethod.Get, "https://server.example.com/api/v2/pokemon-species/*")
             .Respond("application/json", json);
 
     using var httpClient = mockHttp.ToHttpClient();
+
+    httpClient.BaseAddress = new Uri("https://server.example.com/");
 
     var sut = new PokeApiHttpClient(httpClient);
 
@@ -40,7 +42,7 @@ public sealed class PokeApiHttpClientTests
 
     using var mockHttp = new MockHttpMessageHandler();
 
-    mockHttp.Expect("https://server.example.com/api/v2/pokemon-species/bulbasaur")
+    mockHttp.Expect(HttpMethod.Get, "https://server.example.com/api/v2/pokemon-species/bulbasaur")
             .Respond("application/json", json);
 
     using var httpClient = mockHttp.ToHttpClient();
@@ -86,7 +88,7 @@ public sealed class PokeApiHttpClientTests
     // ARRANGE
     using var mockHttp = new MockHttpMessageHandler();
 
-    mockHttp.Expect("https://server.example.com/api/v2/pokemon-species/bulbasaur")
+    mockHttp.Expect(HttpMethod.Get, "https://server.example.com/api/v2/pokemon-species/bulbasaur")
             .Respond(HttpStatusCode.NotFound);
 
     using var httpClient = mockHttp.ToHttpClient();
