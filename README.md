@@ -65,7 +65,7 @@ A further step to improve the observability of the system is using a dedicated A
  - a lot of useful metrics are collected (e.g.: CPU usage, memory usage, response time of incoming HTTP requests)
  - dashboards to visualize the collected metrics can be defined and modified over time
  - alerts can be set up, based on collected metrics and application performances
- - a detailed tracing of the incoming HTTP requests is available. This tracing highlights all the dependencies used to serve incoming requests (e.g.: database queries and requests to third-party Web API services) and their respective response time. This can be useful to detect bottlenecks and to improve application performance.
+ - a detailed tracing of the incoming HTTP requests is available. This tracing highlights all the dependencies used to serve incoming requests (e.g.: database queries and requests to third-party Web API services) and their respective response time. This can be useful to detect bottlenecks and to investigate application issues. 
 
  ### Other improvements
  There are many other possible improvements: 
