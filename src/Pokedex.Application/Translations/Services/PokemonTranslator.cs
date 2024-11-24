@@ -1,5 +1,5 @@
-﻿using Pokedex.Application.Abstractions;
-using Pokedex.Application.Translations.Abstractions;
+﻿using Pokedex.Application.Translations.Abstractions;
+using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 using Pokedex.Framework.Patterns.Strategies;
 
@@ -16,6 +16,14 @@ public sealed class PokemonTranslator : IPokemonTranslator
 
   public async Task<Pokemon> TranslateAsync(Pokemon pokemon, CancellationToken cancellationToken)
   {
-    throw new NotImplementedException();
+    ArgumentNullException.ThrowIfNull(pokemon);
+
+    var translationStrategy = _strategySelector.GetRequiredMatchingStrategy(pokemon);
+
+    var translatedDescription = await translationStrategy.HandleAsync(
+      pokemon,
+      cancellationToken).ConfigureAwait(false);
+
+    return pokemon with { Description = translatedDescription };
   }
 }

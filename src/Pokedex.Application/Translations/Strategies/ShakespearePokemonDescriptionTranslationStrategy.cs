@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using Pokedex.Application.Abstractions;
 using Pokedex.Application.Translations.Abstractions;
 using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;

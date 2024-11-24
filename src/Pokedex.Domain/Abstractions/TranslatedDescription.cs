@@ -1,4 +1,4 @@
-﻿namespace Pokedex.Application.Abstractions;
+﻿namespace Pokedex.Domain.Abstractions;
 
 public sealed record TranslatedDescription(string? Value)
 {
