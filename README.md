@@ -46,7 +46,7 @@ Authorization policies are [fully supported in ASP.NET core](https://learn.micro
 ### Caching the result of outbound HTTP requests
 This project gets Pokemon data from the [PokéAPI](https://pokeapi.co/) and translations from the [FunTranslations API](https://funtranslations.com/).
 
-The results obtained by calling these endpoints can safely be cache, since we don't expect Pokemon information and text translations to change often. By doing so, performance can be improved a lot, since a lot of HTTP requests can be saved and responses are read directly from a cache. The simplest caching solution is using the [ASP.NET core memory cache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-9.0), a common solution to implement a distributed cache is using [Redis](https://redis.io/). 
+The results obtained by calling these endpoints can be safely cached, since we don't expect Pokemon information and text translations to change often. By doing so, performance can be improved a lot, since a lot of HTTP requests can be saved and responses are read directly from a cache. The simplest caching solution is using the [ASP.NET core memory cache](https://learn.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-9.0), a common solution to implement a distributed cache is using [Redis](https://redis.io/). 
 A very nice library to implement advanced caching strategies in ASP.NET core applications is [Fusion Cache](https://github.com/ZiggyCreatures/FusionCache). 
 
 Another benefit obtained by caching the responses from PokeAPI and FunTranslations API is to avoid hitting the rate-limit threshold, which is quite aggressive for the free version of these API services.
