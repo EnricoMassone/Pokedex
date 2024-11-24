@@ -61,7 +61,7 @@ This service offers only a very basic logging implementation, which is done usin
 
 In a real production environment it is better to store logs in a centralized log store, which is easily queryable. Common services used to do that are SQL Server, MongoDB or Elasticsearch. 
 
-A further step to improve the observability of the system is using a dedicated APM (Application Performance Monitoring) service, to monitor the Web API service. Common services used to do that are Azure Application Insights and Datadog, among the others. APM services can act as centralized log stores, but they offer many other capabilities: 
+A further step to improve the observability of the system is using a dedicated APM ([Application Performance Management](https://en.wikipedia.org/wiki/Application_performance_management)) service, to monitor the Web API service. Common services used to do that are [Azure Application Insights](https://azure.microsoft.com/en-us/products/monitor/?ef_id=_k_Cj0KCQiAuou6BhDhARIsAIfgrn4y9Nfx1Mt5CM7GYudFfqzpIqv1S9q5jHPniMkJ4gSN5-HYWj0jjdUaAueBEALw_wcB_k_&OCID=AIDcmmy6frl1tq_SEM__k_Cj0KCQiAuou6BhDhARIsAIfgrn4y9Nfx1Mt5CM7GYudFfqzpIqv1S9q5jHPniMkJ4gSN5-HYWj0jjdUaAueBEALw_wcB_k_&gad_source=1&gclid=Cj0KCQiAuou6BhDhARIsAIfgrn4y9Nfx1Mt5CM7GYudFfqzpIqv1S9q5jHPniMkJ4gSN5-HYWj0jjdUaAueBEALw_wcB) and [Datadog](https://www.datadoghq.com/), among the others. APM services can act as centralized log stores, but they offer many other capabilities: 
  - a lot of useful metrics are collected (e.g.: CPU usage, memory usage, response time of incoming HTTP requests)
  - dashboards to visualize the collected metrics can be defined and modified over time
  - alerts can be set up, based on collected metrics and application performances
