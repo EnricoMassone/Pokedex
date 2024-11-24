@@ -17,3 +17,65 @@ using System.Diagnostics.CodeAnalysis;
   Justification = "We can skip validation because this argument is provided by Autofixture",
   Scope = "member",
   Target = "~M:Pokedex.Application.UnitTests.Pokemons.GetPokemonQueryHandlerTests.Handle_Returns_Response_Based_On_Pokemon_Returned_By_Repository(Pokedex.Domain.Pokemons.Name,Pokedex.Domain.Pokemons.Pokemon,System.Threading.CancellationToken)~System.Threading.Tasks.Task")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.Strategies.YodaPokemonDescriptionTranslationStrategyTests")]
+
+[assembly: SuppressMessage(
+  "Performance",
+  "CA1848:Use the LoggerMessage delegates",
+  Justification = "This project does not use LoggerMessage delegates",
+  Scope = "module")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.Strategies.ShakespearePokemonDescriptionTranslationStrategyTest")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.Services.PokemonTranslatorTests")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Pokemons.GetPokemon.GetPokemonQueryHandlerTests")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.GetTranslatedPokemon.GetTranslatedPokemonQueryHandlerTests")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.GetTranslatedPokemon.Strategies.YodaPokemonDescriptionTranslationStrategyTests")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.GetTranslatedPokemon.Services.PokemonTranslatorTests")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "\"We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.GetTranslatedPokemon.Strategies.ShakespearePokemonDescriptionTranslationStrategyTests")]

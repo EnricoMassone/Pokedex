@@ -5,7 +5,7 @@ using Pokedex.Application.Pokemons.GetPokemon;
 using Pokedex.Domain.Abstractions;
 using Pokedex.Domain.Pokemons;
 
-namespace Pokedex.Application.UnitTests.Pokemons;
+namespace Pokedex.Application.UnitTests.Pokemons.GetPokemon;
 
 public sealed class GetPokemonQueryHandlerTests
 {
@@ -41,7 +41,7 @@ public sealed class GetPokemonQueryHandlerTests
     // ARRANGE
     _pokemonRepositoryMock
       .Setup(m => m.GetByNameAsync(name, cancellationToken))
-      .ReturnsAsync(pokemon, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(pokemon, TimeSpan.FromMilliseconds(value: 5));
 
     var query = new GetPokemonQuery(name);
 
@@ -71,7 +71,7 @@ public sealed class GetPokemonQueryHandlerTests
     // ARRANGE
     _pokemonRepositoryMock
       .Setup(m => m.GetByNameAsync(name, cancellationToken))
-      .ReturnsAsync(Option<Pokemon>.None, TimeSpan.FromMilliseconds(value: 10));
+      .ReturnsAsync(Option<Pokemon>.None, TimeSpan.FromMilliseconds(value: 5));
 
     var query = new GetPokemonQuery(name);
 

@@ -1,5 +1,4 @@
-﻿
-namespace Pokedex.Framework.Patterns.Strategies;
+﻿namespace Pokedex.Framework.Patterns.Strategies;
 
 public abstract class Strategy<TData, TResult> : IStrategy<TData, TResult>
 {
@@ -9,7 +8,7 @@ public abstract class Strategy<TData, TResult> : IStrategy<TData, TResult>
 
   public async Task<TResult> HandleAsync(TData data, CancellationToken cancellationToken)
   {
-    if (this.CanHandle(data))
+    if (!this.CanHandle(data))
     {
       throw new InvalidOperationException(
         $"Strategy {this.Name} cannot handle the provided data of type {typeof(TData).Name}"
