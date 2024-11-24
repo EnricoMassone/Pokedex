@@ -1,4 +1,5 @@
-﻿using Pokedex.Domain.Abstractions;
+﻿using Pokedex.Application.Translations.Abstractions;
+using Pokedex.Domain.Abstractions;
 using System.Net.Http.Json;
 
 namespace Pokedex.Infrastructure.FunTranslationsApis;

@@ -1,4 +1,4 @@
-﻿namespace Pokedex.Infrastructure.FunTranslationsApis;
+﻿namespace Pokedex.Application.Translations.Abstractions;
 
 public sealed record FunTranslationsApiResponse
 {

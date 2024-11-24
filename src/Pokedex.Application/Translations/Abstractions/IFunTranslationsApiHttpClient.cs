@@ -1,6 +1,6 @@
 ﻿using Pokedex.Domain.Abstractions;
 
-namespace Pokedex.Infrastructure.FunTranslationsApis;
+namespace Pokedex.Application.Translations.Abstractions;
 
 public interface IFunTranslationsApiHttpClient
 {
