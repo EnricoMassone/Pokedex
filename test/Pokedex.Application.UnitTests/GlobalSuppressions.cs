@@ -17,3 +17,10 @@ using System.Diagnostics.CodeAnalysis;
   Justification = "We can skip validation because this argument is provided by Autofixture",
   Scope = "member",
   Target = "~M:Pokedex.Application.UnitTests.Pokemons.GetPokemonQueryHandlerTests.Handle_Returns_Response_Based_On_Pokemon_Returned_By_Repository(Pokedex.Domain.Pokemons.Name,Pokedex.Domain.Pokemons.Pokemon,System.Threading.CancellationToken)~System.Threading.Tasks.Task")]
+
+[assembly: SuppressMessage(
+  "Design",
+  "CA1062:Validate arguments of public methods",
+  Justification = "We can skip validation because this argument is provided by Autofixture",
+  Scope = "type",
+  Target = "~T:Pokedex.Application.UnitTests.Translations.Strategies.YodaPokemonDescriptionTranslationStrategyTests")]

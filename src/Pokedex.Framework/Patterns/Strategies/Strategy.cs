@@ -1,5 +1,4 @@
-﻿
-namespace Pokedex.Framework.Patterns.Strategies;
+﻿namespace Pokedex.Framework.Patterns.Strategies;
 
 public abstract class Strategy<TData, TResult> : IStrategy<TData, TResult>
 {
